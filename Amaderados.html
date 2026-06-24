@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Perfumes</title>
+    <link rel="icon" type="image/png" href="Black and White Circular Art & Design Logo.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* El botón de las 3 rayitas */
+        .menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            user-select: none;
+            margin-left: auto;
+        }
+
+        /* El menú desplegable */
+        .nav-menu {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #333;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Cuando el JS activa esta clase, el menú se muestra */
+        .nav-menu.activo {
+            max-height: 400px;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* ESTO QUITA LA FORMA DE LISTA FEA */
+        .nav-menu ul {
+            list-style: none; /* Quita los puntos/viñetas */
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Diseño de cada link para que parezca botón de menú */
+        .nav-menu ul li {
+            border-bottom: 1px solid #444;
+        }
+
+        .nav-menu ul li a {
+            color: white;
+            text-decoration: none; /* Quita la raya azul de abajo del texto */
+            display: block;
+            padding: 15px 20px;
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+
+        .nav-menu ul li a:hover {
+            background-color: #555; /* Cambia de color cuando pasas el mouse */
+        }
+        
+        .home{
+            background-image: url("https://img.magnific.com/foto-gratis/telon-fondo-producto-diseno-realista-humo-cinematografico_53876-129242.jpg?semt=ais_hybrid&w=740&q=80");
+            background-size: cover;
+            padding: 100px;
+            padding-left: 150px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            background-position: center;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            max-width: 250px;
+            max-height: 550px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 20px auto;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .card img {
+            width: 250px;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1a1a1a;
+            padding: 15px 15px 10px;
+            margin: 0;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: #666;
+            padding: 0 15px 15px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .carousel-section {
+            position: relative;
+            padding: 40px 20px;
+            background-color: #f4f4f4;
+        }
+
+        .carousel-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .carousel-btn {
+            background-color: #1a1a1a;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+
+        .carousel-btn:hover {
+            background-color: #333;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .carousel-track::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .carousel-track::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-radius: 10px;
+        }
+
+        .carousel-track::-webkit-scrollbar-thumb {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .cards-container .card {
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        .sub{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">El rinconcito de Nick</div>
+        
+        <div class="menu-btn" id="menu-btn">☰</div>
+
+        <div>
+            <nav class="nav-menu" id="nav-menu">
+                <ul>
+                    <li><a href="Index.html">Inicio</a></li>
+                    <li><a href="FrescAcua.html">Frescos y Acuaticos</a></li>
+                    <li><a href="Aromaticos.html">Aromáticos y Limpios</a></li>
+                    <li><a href="Amaderados.html">Amaderados</a></li>
+                    <li><a href="Dulces.html">Dulces y Frutales</a></li>
+                    <li><a href="Orientales.html">Orientales</a></li>
+                </ul>
+            </nav>
+        </div>
+
+    </header>
+
+    <div class="home">
+        Carácter, elegancia y presencia en cada nota.
+    </div>
+
+    <div class="carousel-section">
+        <div class="sub">
+            <h3>Amaderados y terrozos</h3>
+        </div>
+
+        <div class="carousel-container">
+            <button class="carousel-btn prev-btn">‹</button>
+            <div class="carousel-track">
+                <div class="cards-container">
+
+                    <div class="card">
+                        <img src="https://preview.redd.it/encre-noire-sport-a-walk-through-a-forest-v0-57iyxo3701pc1.jpeg?auto=webp&s=5858e08a89b8224e7a6c71f0264d235d6cb90a17" alt="">
+                        <h2 class="card-title">Encre Noire</h2>
+                        <p class="card-description">Misterio auténtico; una propuesta diferente para quienes buscan personalidad.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://i5.walmartimages.com/asr/66eb7cfd-cbd1-4172-a3b6-7ea64f0cdf79.082ecde092264cea00bd5a38264e5722.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" alt="">
+                        <h2 class="card-title">Mint and Wood</h2>
+                        <p class="card-description">Contraste perfecto; frescura revitalizante sobre una base elegante de maderas.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://m.media-amazon.com/images/I/61YAoIOGGjL.jpg" alt="">
+                        <h2 class="card-title">Select</h2>
+                        <p class="card-description">Profesionalismo discreto; confianza y seriedad sin exageraciones.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://http2.mlstatic.com/D_NQ_NP_906784-MLU79019523990_092024-O.webp" alt="">
+                        <h2 class="card-title">Man Wood Essence</h2>
+                        <p class="card-description">Fortaleza natural; una mezcla de maderas que transmite madurez y seguridad.</p>
+                    </div>
+
+                </div>
+            </div>
+            <button class="carousel-btn next-btn">›</button>
+        </div>
+    </div>
+
+
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+
+        // Cuando le picas al botón, le pone o le quita la clase 'activo' al menú
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('activo');
+        });
+
+        // Funcionalidad del carrusel
+        const prevBtns = document.querySelectorAll('.prev-btn');
+        const nextBtns = document.querySelectorAll('.next-btn');
+
+        prevBtns.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const carousel = btn.closest('.carousel-container').querySelector('.carousel-track');
+                carousel.scrollBy({
+                    left: -320,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        nextBtns.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const carousel = btn.closest('.carousel-container').querySelector('.carousel-track');
+                carousel.scrollBy({
+                    left: 320,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

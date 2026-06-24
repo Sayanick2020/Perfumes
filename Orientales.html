@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Perfumes</title>
+    <link rel="icon" type="image/png" href="Black and White Circular Art & Design Logo.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* El botón de las 3 rayitas */
+        .menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            user-select: none;
+            margin-left: auto;
+        }
+
+        /* El menú desplegable */
+        .nav-menu {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #333;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Cuando el JS activa esta clase, el menú se muestra */
+        .nav-menu.activo {
+            max-height: 400px;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* ESTO QUITA LA FORMA DE LISTA FEA */
+        .nav-menu ul {
+            list-style: none; /* Quita los puntos/viñetas */
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Diseño de cada link para que parezca botón de menú */
+        .nav-menu ul li {
+            border-bottom: 1px solid #444;
+        }
+
+        .nav-menu ul li a {
+            color: white;
+            text-decoration: none; /* Quita la raya azul de abajo del texto */
+            display: block;
+            padding: 15px 20px;
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+
+        .nav-menu ul li a:hover {
+            background-color: #555; /* Cambia de color cuando pasas el mouse */
+        }
+        
+        .home{
+            background-image: url("https://img.magnific.com/foto-gratis/telon-fondo-producto-diseno-realista-humo-cinematografico_53876-129242.jpg?semt=ais_hybrid&w=740&q=80");
+            background-size: cover;
+            padding: 100px;
+            padding-left: 150px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            background-position: center;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            max-width: 250px;
+            max-height: 550px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 20px auto;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .card img {
+            width: 250px;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1a1a1a;
+            padding: 15px 15px 10px;
+            margin: 0;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: #666;
+            padding: 0 15px 15px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .carousel-section {
+            position: relative;
+            padding: 40px 20px;
+            background-color: #f4f4f4;
+        }
+
+        .carousel-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .carousel-btn {
+            background-color: #1a1a1a;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+
+        .carousel-btn:hover {
+            background-color: #333;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .carousel-track::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .carousel-track::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-radius: 10px;
+        }
+
+        .carousel-track::-webkit-scrollbar-thumb {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .cards-container .card {
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        .sub{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">El rinconcito de Nick</div>
+        
+        <div class="menu-btn" id="menu-btn">☰</div>
+
+        <div>
+            <nav class="nav-menu" id="nav-menu">
+                <ul>
+                    <li><a href="Index.html">Inicio</a></li>
+                    <li><a href="FrescAcua.html">Frescos y Acuaticos</a></li>
+                    <li><a href="Aromaticos.html">Aromáticos y Limpios</a></li>
+                    <li><a href="Amaderados.html">Amaderados</a></li>
+                    <li><a href="Dulces.html">Dulces y Frutales</a></li>
+                    <li><a href="Orientales.html">Orientales</a></li>
+                </ul>
+            </nav>
+        </div>
+
+    </header>
+
+    <div class="home">
+        Intensidad, misterio y seducción en cada gota.
+    </div>
+
+    <div class="carousel-section">
+        <div class="sub">
+            <h3>Orientales, Oud y Oscuros</h3>
+        </div>
+
+        <div class="carousel-container">
+            <button class="carousel-btn prev-btn">‹</button>
+            <div class="carousel-track">
+                <div class="cards-container">
+
+                    <div class="card">
+                        <img src="https://http2.mlstatic.com/D_NQ_NP_720907-MLU70967342772_082023-O.webp" alt="">
+                        <h2 class="card-title">Shaghaf</h2>
+                        <p class="card-description">Lujo invernal; dulzura oriental rica y reconfortante.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://m.media-amazon.com/images/I/61NO5XIuFwL._AC_UF1000,1000_QL80_.jpg" alt="">
+                        <h2 class="card-title">Exclusive</h2>
+                        <p class="card-description">Lujo invernal; dulzura oriental rica y reconfortante.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://aromatica.cr/cdn/shop/files/L_Homme-Ideal-L_Intense-Aromatica-CR-454014688.jpg?v=1754582267&width=416" alt="">
+                        <h2 class="card-title">L'Homme Ideal L'Intense</h2>
+                        <p class="card-description">Caballerosidad moderna; refinamiento francés con carácter.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://i.pinimg.com/1200x/d3/3d/8a/d33d8a5d9a0463044e238dceda6d118c.jpg" alt="">
+                        <h2 class="card-title">For Him Black Edition Intense</h2>
+                        <p class="card-description">Noche elegante; oscuridad sofisticada con limpieza impecable.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://fimgs.net/mdimg/perfume-thumbs/375x500.124832.jpg" alt="">
+                        <h2 class="card-title">Absolutely Dark Intense</h2>
+                        <p class="card-description">Confianza sin concesiones; para quienes marcan su propio camino.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://perfumescardales.com.ar/wp-content/uploads/2022/05/Dark-Revel-4.jpg" alt="">
+                        <h2 class="card-title">J.V Dark Rebel</h2>
+                        <p class="card-description">Espíritu rebelde; cuero, actitud y libertad.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://m.media-amazon.com/images/I/71EkgdgMznL._AC_UF350,350_QL80_.jpg" alt="">
+                        <h2 class="card-title">Bade'e Al Oud</h2>
+                        <p class="card-description">Presencia majestuosa; lujo oriental con gran impacto.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIvNFF8BReDOCfNTerKjoDhvy3GPkObpZ2_Q&s" alt="">
+                        <h2 class="card-title">Essencial Oud Vanilla</h2>
+                        <p class="card-description">Atracción sofisticada; vainilla cremosa y maderas nobles.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://perfumescardales.com.ar/wp-content/uploads/2024/10/dubai-night-3.jpg" alt="">
+                        <h2 class="card-title">Amber Oud Dubai Night</h2>
+                        <p class="card-description">Opulencia moderna; riqueza aromática inspirada en Dubái.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://production.na01.natura.com/dw/image/v2/BFKR_PRD/on/demandware.static/-/Sites-NaturaMexico-Library/default/dw08dc8a5e/PRODUCTOS%20JOIA/109164_widepic_1_desktop.jpg" alt="">
+                        <h2 class="card-title">Homem Tato</h2>
+                        <p class="card-description">Calidez reconfortante; cuero suave que invita a la cercanía.</p>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <button class="carousel-btn next-btn">›</button>
+        </div>
+    </div>
+
+
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+
+        // Cuando le picas al botón, le pone o le quita la clase 'activo' al menú
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('activo');
+        });
+
+        // Funcionalidad del carrusel
+        const prevBtns = document.querySelectorAll('.prev-btn');
+        const nextBtns = document.querySelectorAll('.next-btn');
+
+        prevBtns.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const carousel = btn.closest('.carousel-container').querySelector('.carousel-track');
+                carousel.scrollBy({
+                    left: -320,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        nextBtns.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const carousel = btn.closest('.carousel-container').querySelector('.carousel-track');
+                carousel.scrollBy({
+                    left: 320,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
