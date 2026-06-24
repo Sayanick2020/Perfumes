@@ -246,7 +246,6 @@
         </div>
 
         <div class="carousel-container">
-            <button class="carousel-btn prev-btn">‹</button>
             <div class="carousel-track">
                 <div class="cards-container">
 
@@ -276,7 +275,6 @@
 
                 </div>
             </div>
-            <button class="carousel-btn next-btn">›</button>
         </div>
     </div>
 
@@ -291,29 +289,6 @@
             navMenu.classList.toggle('activo');
         });
 
-        // Funcionalidad del carrusel
-        const prevBtns = document.querySelectorAll('.prev-btn');
-        const nextBtns = document.querySelectorAll('.next-btn');
-
-        prevBtns.forEach((btn) => {
-            btn.addEventListener('click', () => {
-                const carousel = btn.closest('.carousel-container').querySelector('.carousel-track');
-                carousel.scrollBy({
-                    left: -320,
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        nextBtns.forEach((btn) => {
-            btn.addEventListener('click', () => {
-                const carousel = btn.closest('.carousel-container').querySelector('.carousel-track');
-                carousel.scrollBy({
-                    left: 320,
-                    behavior: 'smooth'
-                });
-            });
-        });
     </script>
 </body>
 </html>
