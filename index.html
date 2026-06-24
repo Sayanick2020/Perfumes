@@ -43,7 +43,10 @@
 
         /* El menú desplegable */
         .nav-menu {
-            display: none; /* Oculto por defecto */
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
             position: absolute;
             top: 100%;
             right: 0;
@@ -51,17 +54,22 @@
             width: 100%;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
         }
 
         /* Cuando el JS activa esta clase, el menú se muestra */
         .nav-menu.activo {
-            display: block; 
+            max-height: 400px;
+            opacity: 1;
+            pointer-events: auto;
         }
 
         /* ESTO QUITA LA FORMA DE LISTA FEA */
         .nav-menu ul {
             list-style: none; /* Quita los puntos/viñetas */
             padding: 0;
+            margin: 0;
         }
 
         /* Diseño de cada link para que parezca botón de menú */
@@ -98,7 +106,8 @@
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             overflow: hidden;
-            max-width: 280px;
+            max-width: 250px;
+            max-height: 550px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             margin: 20px auto;
         }
@@ -109,8 +118,8 @@
         }
 
         .card img {
-            width: 280px;
-            height: 250px;
+            width: 250px;
+            height: 220px;
             object-fit: cover;
             display: block;
         }
@@ -131,17 +140,70 @@
             line-height: 1.5;
         }
 
-        .cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+        .carousel-section {
+            position: relative;
             padding: 40px 20px;
             background-color: #f4f4f4;
         }
 
+        .carousel-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .carousel-btn {
+            background-color: #1a1a1a;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+
+        .carousel-btn:hover {
+            background-color: #333;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .carousel-track::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .carousel-track::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-radius: 10px;
+        }
+
+        .carousel-track::-webkit-scrollbar-thumb {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 20px;
+        }
+
         .cards-container .card {
-            margin: 20px;
+            margin: 0;
+            flex-shrink: 0;
         }
 
         .sub{
@@ -162,9 +224,12 @@
         <div>
             <nav class="nav-menu" id="nav-menu">
                 <ul>
-                    <li><a href="frescos.html">Perfumes Frescos</a></li>
-                    <li><a href="amaderados.html">Perfumes Amaderados</a></li>
-                    <li><a href="dulces.html">Perfumes Dulces</a></li>
+                    <li><a href="Index.html">Inicio</a></li>
+                    <li><a href="FrescAcua.html">Frescos y Acuaticos</a></li>
+                    <li><a href="Aromaticos.html">Aromáticos y Limpios</a></li>
+                    <li><a href="Amaderados.html">Amaderados</a></li>
+                    <li><a href="Dulces.html">Dulces y Frutales</a></li>
+                    <li><a href="Orientales.html">Orientales</a></li>
                 </ul>
             </nav>
         </div>
@@ -175,79 +240,101 @@
         Los mejores perfumes parciales a un increible precio
     </div>
 
-    <div class="sub">
-        <h3>Los más populares</h3>
-    </div>
-
-    <div class="cards-container">
-        <div class="card">
-            <img src="https://dojiw2m9tvv09.cloudfront.net/91550/product/s-l12009816.png" alt="">
-            <h2 class="card-title">Asad Bourbon</h2>
-            <p class="card-description">Vainilla cálida, maderas y un toque licoroso; una opción densa y seductora para el frío o la noche.</p>
-        </div>
-
-        <div class="card">
-            <img src="https://belcorpmexico.vtexassets.com/arquivos/ids/1144301-800-800?v=639168679027600000&width=800&height=800&aspect=true" alt="">
-            <h2 class="card-title">Select Magnat</h2>
-            <p class="card-description">Amaderado moderno y maduro con un toque fresco; la fragancia ideal si quieres un aroma irreal</p>
-        </div>
-
-
-
-        <div class="card">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3Uj3OfmAx3dWHlkRoR_bWUb8zj0pDxYlp3OAKMjFyaA&s=10" alt="">
-            <h2 class="card-title">Pulso Kaiak</h2>
-            <p class="card-description">Una explosión de hierbas frescas y especias picantes sobre un fondo de maderas; un aroma muy enérgico, limpio y dinámico para el día a día.</p>
-        </div>
-    </div>
-
+    <div class="carousel-section">
         <div class="sub">
-        <h3>Clasicos</h3>
+            <h3>Los más populares</h3>
+        </div>
+
+        <div class="carousel-container">
+            <button class="carousel-btn prev-btn">‹</button>
+            <div class="carousel-track">
+                <div class="cards-container">
+                    <div class="card">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTManLpeviCpGTaFyi0f0EZ3wHYNK7ZeLTtyiIYrrhpw&s=10" alt="">
+                        <h2 class="card-title">John varvatos artisan</h2>
+                        <p class="card-description">Vainilla cálida, maderas y un toque licoroso; una opción densa y seductora para el frío o la noche.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://m.media-amazon.com/images/I/61YAoIOGGjL._AC_UF350,350_QL80_.jpg" alt="">
+                        <h2 class="card-title">Select Magnat</h2>
+                        <p class="card-description">Amaderado moderno y maduro con un toque fresco; la fragancia ideal si quieres un aroma irreal</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3Uj3OfmAx3dWHlkRoR_bWUb8zj0pDxYlp3OAKMjFyaA&s=10" alt="">
+                        <h2 class="card-title">Pulso Kaiak</h2>
+                        <p class="card-description">Una explosión de hierbas frescas y especias picantes sobre un fondo de maderas; un aroma muy enérgico, limpio y dinámico para el día a día.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next-btn">›</button>
+        </div>
     </div>
 
-    <div class="cards-container">
-        <div class="card">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQERirEH8jdAo1Uv7bS7z3NaV3B71AWL78D79Q_1vvfRQ&s=10" alt="">
-            <h2 class="card-title">acqua di gio giorgio armani</h2>
-            <p class="card-description">El rey de los perfumes cítricos y acuáticos; elegancia marina, ligera y completamente atemporal.</p>
+    <div class="carousel-section">
+        <div class="sub">
+            <h3>Clasicos</h3>
         </div>
 
-        <div class="card">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR29Nqj7i7QS8vZ4od31T32gJViV7uZoik8outrxb0y-Q&s=10" alt="">
-            <h2 class="card-title">Sport Encre Noire</h2>
-            <p class="card-description">Una versión más fresca y ponible del clásico original; mantiene la madera de vetiver oscura y misteriosa, pero le añade cítricos y notas acuáticas para que puedas usarlo de día o en primavera.</p>
-        </div>
+        <div class="carousel-container">
+            <button class="carousel-btn prev-btn">‹</button>
+            <div class="carousel-track">
+                <div class="cards-container">
+                    <div class="card">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQERirEH8jdAo1Uv7bS7z3NaV3B71AWL78D79Q_1vvfRQ&s=10" alt="">
+                        <h2 class="card-title">acqua di gio giorgio armani</h2>
+                        <p class="card-description">El rey de los perfumes cítricos y acuáticos; elegancia marina, ligera y completamente atemporal.</p>
+                    </div>
 
-        <div class="card">
-            <img src="https://www.myperfumeshop.com/cdn/shop/articles/expert-review-of-paco-rabanne-invictus-edt-197072.webp?v=1673211982&width=2048" alt="">
-            <h2 class="card-title">invictus eau de toilette</h2>
-            <p class="card-description">Fragancia magnética, dulce y marina; un golpe de energía juvenil e informal ideal para salir de fiesta.</p>
+                    <div class="card">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR29Nqj7i7QS8vZ4od31T32gJViV7uZoik8outrxb0y-Q&s=10" alt="">
+                        <h2 class="card-title">Sport Encre Noire</h2>
+                        <p class="card-description">Una versión más fresca y ponible del clásico original; mantiene la madera de vetiver oscura y misteriosa, pero le añade cítricos y notas acuáticas para que puedas usarlo de día o en primavera.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://www.myperfumeshop.com/cdn/shop/articles/expert-review-of-paco-rabanne-invictus-edt-197072.webp?v=1673211982&width=2048" alt="">
+                        <h2 class="card-title">invictus eau de toilette</h2>
+                        <p class="card-description">Fragancia magnética, dulce y marina; un golpe de energía juvenil e informal ideal para salir de fiesta.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next-btn">›</button>
         </div>
     </div>
 
 
 
-            <div class="sub">
-        <h3>Mejores para el verano 🔥</h3>
-    </div>
-
-    <div class="cards-container">
-        <div class="card">
-            <img src="https://arometry.com/cdn/shop/files/Lattafa_Atlas_Sample_Decant_Arometry.webp?v=1769440195&width=1080" alt="">
-            <h2 class="card-title">Atlas</h2>
-            <p class="card-description">Océano profundo, salado y sumamente potente; una bestia marina indestructible que dura horas en el calor.</p>
+    <div class="carousel-section">
+        <div class="sub">
+            <h3>Mejores para el verano 🔥</h3>
         </div>
 
-        <div class="card">
-            <img src="https://production.na01.natura.com/dw/image/v2/BFKR_PRD/on/demandware.static/-/Sites-nat-mex-b2b2c-catalog/default/dwc323aea3/ProdutoJoia/mobile/111174.jpg" alt="">
-            <h2 class="card-title">Aero kaiak</h2>
-            <p class="card-description">Frescura helada, herbal y salina; un escudo térmico que rinde al máximo entre más alta sea la temperatura.</p>
-        </div>
+        <div class="carousel-container">
+            <button class="carousel-btn prev-btn">‹</button>
+            <div class="carousel-track">
+                <div class="cards-container">
+                    <div class="card">
+                        <img src="https://arometry.com/cdn/shop/files/Lattafa_Atlas_Sample_Decant_Arometry.webp?v=1769440195&width=1080" alt="">
+                        <h2 class="card-title">Atlas</h2>
+                        <p class="card-description">Océano profundo, salado y sumamente potente; una bestia marina indestructible que dura horas en el calor.</p>
+                    </div>
 
-        <div class="card">
-            <img src="https://www.comprastodo.com/wp-content/uploads/2019/03/lacoste-l-1212-eau-de-lacoste-blanc-pure-white-for-men-edt-100-ml.jpg" alt="">
-            <h2 class="card-title">White lacoste</h2>
-            <p class="card-description">El aroma a limpio por excelencia; notas florales blancas y toronja que huelen a una playera polo impecable y recién lavada.</p>
+                    <div class="card">
+                        <img src="https://production.na01.natura.com/dw/image/v2/BFKR_PRD/on/demandware.static/-/Sites-nat-mex-b2b2c-catalog/default/dwc323aea3/ProdutoJoia/mobile/111174.jpg" alt="">
+                        <h2 class="card-title">Aero kaiak</h2>
+                        <p class="card-description">Frescura helada, herbal y salina; un escudo térmico que rinde al máximo entre más alta sea la temperatura.</p>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://www.comprastodo.com/wp-content/uploads/2019/03/lacoste-l-1212-eau-de-lacoste-blanc-pure-white-for-men-edt-100-ml.jpg" alt="">
+                        <h2 class="card-title">White lacoste</h2>
+                        <p class="card-description">El aroma a limpio por excelencia; notas florales blancas y toronja que huelen a una playera polo impecable y recién lavada.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next-btn">›</button>
         </div>
     </div>
 
@@ -261,6 +348,30 @@
         // Cuando le picas al botón, le pone o le quita la clase 'activo' al menú
         menuBtn.addEventListener('click', () => {
             navMenu.classList.toggle('activo');
+        });
+
+        // Funcionalidad del carrusel
+        const prevBtns = document.querySelectorAll('.prev-btn');
+        const nextBtns = document.querySelectorAll('.next-btn');
+
+        prevBtns.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const carousel = btn.closest('.carousel-container').querySelector('.carousel-track');
+                carousel.scrollBy({
+                    left: -320,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        nextBtns.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const carousel = btn.closest('.carousel-container').querySelector('.carousel-track');
+                carousel.scrollBy({
+                    left: 320,
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
 </body>
